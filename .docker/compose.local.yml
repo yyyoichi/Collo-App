@@ -1,0 +1,16 @@
+version: '3'
+volumes:
+  collo_app_node_modules:
+
+services:
+  collo-app:
+    build:
+      context: ../
+      dockerfile: ./.docker/dockerfile.local
+    container_name: "collo-app"
+    ports:
+      - "3033:3000"
+    volumes:
+      - ../:/workspaces/node:cached
+      - collo_app_node_modules:/workspace/node/node_modules
+    tty: true

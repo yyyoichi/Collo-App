@@ -13,4 +13,12 @@ services:
     volumes:
       - ../:/workspaces/node:cached
       - collo_app_node_modules:/workspace/node/node_modules
+    environment:
+      - NEXT_PUBLIC_GRPC_HOST=https://localhost:8088
     tty: true
+    networks:
+      - collo-network
+
+networks:
+  collo-network:
+    name: collo-network

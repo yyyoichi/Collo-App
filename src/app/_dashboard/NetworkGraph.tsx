@@ -36,8 +36,9 @@ const LoadGraph = (props: NetworkGraphProps) => {
     useEffect(() => {
         if (props.ready) return;
         const MAX_NODE = 100;
-        const MAX_NODE_SIZE = 10;
-        const MAX_EDGE_SIZE = 3;
+        const BASE_NODE = 3;
+        const MAX_NODE_SIZE = 6;
+        const MAX_EDGE_SIZE = 4;
 
         const graph = new Graph();
         const pairs = props.collo.getSortedPairs().splice(0, MAX_NODE);
@@ -74,7 +75,7 @@ const LoadGraph = (props: NetworkGraphProps) => {
         })
         const NODE_SCALING = MAX_NODE_SIZE / nodeStrength.getMaxCount();
         graph.forEachNode((node, attr) => {
-            attr.size = nodeStrength.get(node) * NODE_SCALING;
+            attr.size = BASE_NODE + nodeStrength.get(node) * NODE_SCALING;
         });
         loadGraph(graph);
         assign();

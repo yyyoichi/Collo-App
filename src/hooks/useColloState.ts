@@ -58,15 +58,24 @@ class ColloNetwork {
     readonly wordsMap = new Map<string, string>(),
     readonly pairsList = new Map<string, number>(),
   ) {}
-  *generatorPairs() {
+  /**カウントの多い順でペアリストを返す */
+  getSortedPairs() {
+    const pairs: {
+      id1: string;
+      id2: string;
+      count: number;
+    }[] = [];
     for (const [ids, count] of this.pairsList.entries()) {
       const [id1, id2] = this.splitWordsID(ids);
-      yield {
-        id1,
-        id2,
-        count,
-      };
+      const pair = { id1, id2, count };
+      pairs.push(pair);
     }
+    pairs.sort((a, b) => b.count - a.count);
+    return pairs;
+  }
+  /**識別子から単語を取得する */
+  getWordByID(id: string) {
+    return this.wordsMap.get(id) || '';
   }
   private splitWordsID(ids: string): [string, string] {
     const [id1, id2] = ids.split(',');

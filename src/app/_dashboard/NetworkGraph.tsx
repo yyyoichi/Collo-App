@@ -6,6 +6,7 @@ import { ControlsContainer, FullScreenControl, SearchControl, SigmaContainer, Zo
 import { LayoutForceAtlas2Control, useLayoutForceAtlas2 } from "@react-sigma/layout-forceatlas2";
 import '@react-sigma/core/lib/react-sigma.min.css';
 import { Attributes } from 'graphology-types';
+import { NodeStrength } from './node';
 
 export type NetworkGraphProps = Pick<ReturnType<typeof useColloState>, 'collo' | 'ready'>;
 export const NetworkGraph = (props: NetworkGraphProps) => {
@@ -34,20 +35,47 @@ const LoadGraph = (props: NetworkGraphProps) => {
 
     useEffect(() => {
         if (props.ready) return;
+        const MAX_NODE = 100;
+        const MAX_NODE_SIZE = 10;
+        const MAX_EDGE_SIZE = 3;
+
         const graph = new Graph();
-        for (const [wordID, word] of props.collo.wordsMap.entries()) {
+        const pairs = props.collo.getSortedPairs().splice(0, MAX_NODE);
+        const EDGE_SCALING = MAX_EDGE_SIZE / pairs[0].count;
+
+        /**単語識別子と共起回数の合計値を持つ */
+        const nodeStrength = new NodeStrength();
+        /**
+         * ノードに単語を追加する
+         * @param wordID 単語識別子
+         */
+        const addNode = (wordID: string) => {
             graph.addNode(wordID, {
-                label: word,
-                size: 5,
+                label: props.collo.getWordByID(wordID),
+                size: 0,
                 x: Math.random() * 100,
                 y: Math.random() * 100,
             });
         }
-        let edgeID = 0;
-        for (const { id1, id2, count } of props.collo.generatorPairs()) {
-            graph.addEdgeWithKey(edgeID, id1, id2);
-            edgeID++;
-        }
+        pairs.forEach(({ id1, id2, count }, edgeID) => {
+            if (!nodeStrength.isAddedNode(id1)) {
+                addNode(id1);
+            }
+            if (!nodeStrength.isAddedNode(id2)) {
+                addNode(id2);
+            }
+            nodeStrength.add(id1, count);
+            nodeStrength.add(id2, count);
+
+            // add edge
+            graph.addEdgeWithKey(edgeID, id1, id2, {
+                size: count * EDGE_SCALING
+            });
+        })
+        const NODE_SCALING = MAX_NODE_SIZE / nodeStrength.getMaxCount();
+        graph.forEachNode((node, attr) => {
+            attr.size = nodeStrength.get(node) * NODE_SCALING;
+        });
         loadGraph(graph);
         assign();
 

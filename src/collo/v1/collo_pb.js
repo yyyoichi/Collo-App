@@ -6,10 +6,10 @@
 import { proto3, Timestamp } from "@bufbuild/protobuf";
 
 /**
- * @generated from message collo.v1.ColloRequest
+ * @generated from message collo.v1.ColloStreamRequest
  */
-export const ColloRequest = proto3.makeMessageType(
-  "collo.v1.ColloRequest",
+export const ColloStreamRequest = proto3.makeMessageType(
+  "collo.v1.ColloStreamRequest",
   () => [
     { no: 1, name: "keyword", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "from", kind: "message", T: Timestamp },
@@ -23,18 +23,8 @@ export const ColloRequest = proto3.makeMessageType(
 export const ColloStreamResponse = proto3.makeMessageType(
   "collo.v1.ColloStreamResponse",
   () => [
-    { no: 1, name: "words", kind: "map", K: 5 /* ScalarType.INT32 */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
-    { no: 2, name: "pairs", kind: "message", T: Pair, repeated: true },
-  ],
-);
-
-/**
- * @generated from message collo.v1.Pair
- */
-export const Pair = proto3.makeMessageType(
-  "collo.v1.Pair",
-  () => [
-    { no: 1, name: "values", kind: "scalar", T: 5 /* ScalarType.INT32 */, repeated: true },
+    { no: 1, name: "words", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
+    { no: 2, name: "pairs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ],
 );
 

@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ColloRequest, ColloStreamResponse } from "./collo_pb.js";
+import { ColloStreamRequest, ColloStreamResponse } from "./collo_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -17,7 +17,7 @@ export const ColloService = {
      */
     colloStream: {
       name: "ColloStream",
-      I: ColloRequest,
+      I: ColloStreamRequest,
       O: ColloStreamResponse,
       kind: MethodKind.ServerStreaming,
     },

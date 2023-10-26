@@ -13,6 +13,8 @@ export const useColloState = () => {
   const [collo, setCollo] = useState(new ColloNetwork());
 
   const requestCollo = async (from: Date = new Date(), until: Date = new Date(), keyword: string = '言葉') => {
+    setCollo(new ColloNetwork());
+
     const client = createPromiseClient(ColloService, transport);
     const req = new ColloStreamRequest();
     const f = Timestamp.fromDate(from);

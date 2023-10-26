@@ -7,9 +7,9 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
 
 /**
- * @generated from message collo.v1.ColloRequest
+ * @generated from message collo.v1.ColloStreamRequest
  */
-export class ColloRequest extends Message<ColloRequest> {
+export class ColloStreamRequest extends Message<ColloStreamRequest> {
   /**
    * @generated from field: string keyword = 1;
    */
@@ -25,33 +25,33 @@ export class ColloRequest extends Message<ColloRequest> {
    */
   until?: Timestamp;
 
-  constructor(data?: PartialMessage<ColloRequest>) {
+  constructor(data?: PartialMessage<ColloStreamRequest>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "collo.v1.ColloRequest";
+  static readonly typeName = "collo.v1.ColloStreamRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "keyword", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "from", kind: "message", T: Timestamp },
     { no: 3, name: "until", kind: "message", T: Timestamp },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ColloRequest {
-    return new ColloRequest().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ColloStreamRequest {
+    return new ColloStreamRequest().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ColloRequest {
-    return new ColloRequest().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ColloStreamRequest {
+    return new ColloStreamRequest().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ColloRequest {
-    return new ColloRequest().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ColloStreamRequest {
+    return new ColloStreamRequest().fromJsonString(jsonString, options);
   }
 
-  static equals(a: ColloRequest | PlainMessage<ColloRequest> | undefined, b: ColloRequest | PlainMessage<ColloRequest> | undefined): boolean {
-    return proto3.util.equals(ColloRequest, a, b);
+  static equals(a: ColloStreamRequest | PlainMessage<ColloStreamRequest> | undefined, b: ColloStreamRequest | PlainMessage<ColloStreamRequest> | undefined): boolean {
+    return proto3.util.equals(ColloStreamRequest, a, b);
   }
 }
 
@@ -60,14 +60,14 @@ export class ColloRequest extends Message<ColloRequest> {
  */
 export class ColloStreamResponse extends Message<ColloStreamResponse> {
   /**
-   * @generated from field: map<int32, string> words = 1;
+   * @generated from field: map<string, string> words = 1;
    */
-  words: { [key: number]: string } = {};
+  words: { [key: string]: string } = {};
 
   /**
-   * @generated from field: repeated collo.v1.Pair pairs = 2;
+   * @generated from field: repeated string pairs = 2;
    */
-  pairs: Pair[] = [];
+  pairs: string[] = [];
 
   constructor(data?: PartialMessage<ColloStreamResponse>) {
     super();
@@ -77,8 +77,8 @@ export class ColloStreamResponse extends Message<ColloStreamResponse> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "collo.v1.ColloStreamResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "words", kind: "map", K: 5 /* ScalarType.INT32 */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
-    { no: 2, name: "pairs", kind: "message", T: Pair, repeated: true },
+    { no: 1, name: "words", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
+    { no: 2, name: "pairs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ColloStreamResponse {
@@ -95,43 +95,6 @@ export class ColloStreamResponse extends Message<ColloStreamResponse> {
 
   static equals(a: ColloStreamResponse | PlainMessage<ColloStreamResponse> | undefined, b: ColloStreamResponse | PlainMessage<ColloStreamResponse> | undefined): boolean {
     return proto3.util.equals(ColloStreamResponse, a, b);
-  }
-}
-
-/**
- * @generated from message collo.v1.Pair
- */
-export class Pair extends Message<Pair> {
-  /**
-   * @generated from field: repeated int32 values = 1;
-   */
-  values: number[] = [];
-
-  constructor(data?: PartialMessage<Pair>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "collo.v1.Pair";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "values", kind: "scalar", T: 5 /* ScalarType.INT32 */, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Pair {
-    return new Pair().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Pair {
-    return new Pair().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Pair {
-    return new Pair().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: Pair | PlainMessage<Pair> | undefined, b: Pair | PlainMessage<Pair> | undefined): boolean {
-    return proto3.util.equals(Pair, a, b);
   }
 }
 
